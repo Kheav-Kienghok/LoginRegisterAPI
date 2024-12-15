@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Page</title>
+    <link rel="stylesheet" href="/static/dashboard.css">
+
+    <script>
+        async function logout() {
+            try {
+                const response = await fetch('/logout', {
+                    method: 'GET',
+                    credentials: 'same-origin',
+                });
+
+                if (response.redirected) {
+                    window.location.href = response.url;
+                } else {
+                    console.error('Logout failed!');
+                }
+            } catch (error) {
+                console.error('An error occurred during logout:', error);
+            }
+        }
+
+        window.onload = function() {
+            document.querySelector('.logout-btn').addEventListener('click', logout);
+        };
+    </script>
+    
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h2>Dashboard</h2>
+            <button class="logout-btn" type="button">LOG OUT</button>
+        </div>
+ 
+        <div class="welcome-section">
+            <p class="welcome-text">Welcome to the page</p>
+            <img src="/static/images/welcome.jpg" alt="Welcome Image" class="welcome-image">
+        </div>
+    </div>
+</body>
+</html>
