@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OTP Verification</title>
+    <link rel="stylesheet" href="/static/otp_verify.css">
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+            <h1>OTP Verification</h1>
+  
+            <p>Enter OTP Code</p>
+            <form action="/verify" method="POST" class="otp-form">
+                <div class="otp-inputs">
+                    <input type="hidden" name="id" value="{{ id }}"> <!-- Pass the ID -->
+                    <input type="text" maxlength="1" class="otp-box" id="otp1" required>
+                    <input type="text" maxlength="1" class="otp-box" id="otp2" required>
+                    <input type="text" maxlength="1" class="otp-box" id="otp3" required>
+                    <input type="text" maxlength="1" class="otp-box" id="otp4" required>
+                    <input type="text" maxlength="1" class="otp-box" id="otp5" required>
+                    <input type="text" maxlength="1" class="otp-box" id="otp6" required>
+                </div>
+                <!-- Hidden field to store OTP -->
+                <input type="hidden" name="otp" id="otp" value="">
+                <button type="submit" class="verify-btn">Verify OTP</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Get all OTP input elements
+        const otpInputs = document.querySelectorAll('.otp-box');
+        const otpField = document.getElementById('otp');
+
+        otpInputs.forEach((input, index) => {
+            input.addEventListener('input', (event) => {
+                // Move to next input if current input has a value
+                if (input.value.length === 1 && index < otpInputs.length - 1) {
+                    otpInputs[index + 1].focus();
+                }
+                // If the input is empty and not the first box, move focus to the previous input
+                if (input.value.length === 0 && index > 0) {
+                    otpInputs[index - 1].focus();
+                }
+                // Update the hidden otp field with the concatenated OTP
+                otpField.value = Array.from(otpInputs).map(input => input.value).join('');
+            });
+        });
+    </script>
+</body>
+</html>
